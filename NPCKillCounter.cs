@@ -39,9 +39,6 @@ public class NPCKillCounter : Mod
 
     public override void HandlePacket(BinaryReader bin, int plr)
     {
-        var type = bin.ReadInt32();
-        var count = bin.ReadInt32();
-        NPCKillCounterSystem.Count[new NPCDefinition(type).ToString()] = count;
-        Console.WriteLine($"{new NPCDefinition(type)} {NPCKillCounterSystem.Count[new NPCDefinition(type).ToString()]}");
+        NPCKillCounterSystem.Count[new NPCDefinition(bin.ReadInt32()).ToString()] = bin.ReadInt32();
     }
 }
