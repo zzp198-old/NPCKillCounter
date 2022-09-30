@@ -75,8 +75,14 @@ public class NPCKillCounterSystem : ModSystem
 
     public override void LoadWorldData(TagCompound tag)
     {
+        if (Count == null)
+        {
+            return;
+        }
+
         if (tag.ContainsKey(nameof(Count)))
         {
+            Count.Clear();
             tag.Get<List<string>>(nameof(Count)).ForEach(obj =>
             {
                 var item = obj.Split(": ", 2);
