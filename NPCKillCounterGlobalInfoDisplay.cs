@@ -34,8 +34,8 @@ public class NPCKillCounterGlobalInfoDisplay : GlobalInfoDisplay
             },
             false => npc.GivenOrTypeName
         };
-        var playerCount = ModContent.GetInstance<NPCKillCounterPlayer>().Count[entity.ToString()];
-        var systemCount = ModContent.GetInstance<NPCKillCounterSystem>().Count[entity.ToString()];
+        var playerCount = NPCKillCounterPlayer.Count[entity.ToString()];
+        var systemCount = NPCKillCounterSystem.Count[entity.ToString()];
         displayValue = $"{name}: {playerCount}/{systemCount}";
     }
 }

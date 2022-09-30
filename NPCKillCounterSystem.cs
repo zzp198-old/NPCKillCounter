@@ -13,8 +13,8 @@ namespace NPCKillCounter;
 
 public class NPCKillCounterSystem : ModSystem
 {
-    // 包含所有MOD的NPC记录,同步时只会同步当前已有的NPC
-    internal DefaultDictionary<string, int> Count = new(); // NPC.killCount用于旗帜计算,不能修改其值.
+    // 包含所有MOD的NPC记录,且同步时只会同步当前已有的NPC.和本地客户端挂钩.
+    internal static readonly DefaultDictionary<string, int> Count = new(); // NPC.killCount用于旗帜计算,不能修改其值.
 
     public override void Load()
     {
@@ -60,7 +60,7 @@ public class NPCKillCounterSystem : ModSystem
 
     public override void LoadWorldData(TagCompound tag)
     {
-        Count = new DefaultDictionary<string, int>();
+        Count.Clear();
         if (tag.ContainsKey(nameof(Count)))
         {
             tag.Get<List<string>>(nameof(Count)).ForEach(obj =>
@@ -76,10 +76,11 @@ public class NPCKillCounterSystem : ModSystem
         }
     }
 
-    public override bool HijackSendData(int whoAmI, int msgType, int remoteClient, int ignoreClient, NetworkText text, int number, float number2, float number3, float number4, int number5, int number6, int number7)
+    public override bool HijackSendData(int whoAmI, int msgType, int remoteClient, int ignoreClient, NetworkText text, int number,
+        float number2, float number3, float number4, int number5, int number6, int number7)
     {
         // 只有服务端才会发送NPCKillCountDeathTally,判断只在新角色进入世界时成立,会遍历所有的ID.
-        // 后续的发送将会是BannerID,失去了代表的意义.由CountKillForBannersAndDropThem执行修改.
+        // 后续的发送将会是BannerID,失去了真实的意义.改由CountKillForBannersAndDropThem执行修改.
         if (msgType == MessageID.NPCKillCountDeathTally && remoteClient != -1 && Netplay.Clients[remoteClient].State == 3)
         {
             var mp = Mod.GetPacket(); // 全体死亡计数在初次进入世界时同步

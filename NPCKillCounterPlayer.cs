@@ -13,7 +13,7 @@ namespace NPCKillCounter;
 public class NPCKillCounterPlayer : ModPlayer
 {
     internal static int Hit;
-    internal DefaultDictionary<string, int> Count = new();
+    internal static readonly DefaultDictionary<string, int> Count = new(); // 注意:非静态readonly需要在IL中实时获取.和本地客户端挂钩.
 
     public override void Load()
     {
@@ -22,18 +22,12 @@ public class NPCKillCounterPlayer : ModPlayer
             var ilCursor = new ILCursor(il);
             ilCursor.Emit(OpCodes.Ldarg_1); // NPCKillAttempt
             ilCursor.Emit(OpCodes.Ldfld, typeof(NPCKillAttempt).GetField(nameof(NPCKillAttempt.npc)));
-            ilCursor.EmitDelegate<Action<NPC>>(npc =>
-            {
-                Count[new NPCDefinition(npc.type).ToString()]++;
-                Console.WriteLine($"{new NPCDefinition(npc.type).ToString()} {Count[new NPCDefinition(npc.type).ToString()]}");
-                Console.WriteLine(Count.Count);
-            });
+            ilCursor.EmitDelegate<Action<NPC>>(npc => { Count[new NPCDefinition(npc.type).ToString()]++; });
         };
     }
 
     public override void SaveData(TagCompound tag)
     {
-        Console.WriteLine(Count.Count);
         var data = new List<string>();
         foreach (var (name, count) in Count)
         {
@@ -45,7 +39,7 @@ public class NPCKillCounterPlayer : ModPlayer
 
     public override void LoadData(TagCompound tag)
     {
-        Count = new DefaultDictionary<string, int>();
+        Count.Clear();
         if (tag.ContainsKey(nameof(Count)))
         {
             tag.Get<List<string>>(nameof(Count)).ForEach(obj =>
