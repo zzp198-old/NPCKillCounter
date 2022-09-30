@@ -49,11 +49,6 @@ public class NPCKillCounterSystem : ModSystem
 
     public override void SaveWorldData(TagCompound tag)
     {
-        if (Count == null)
-        {
-            return;
-        }
-
         var data = new List<string>();
         foreach (var (name, count) in Count)
         {

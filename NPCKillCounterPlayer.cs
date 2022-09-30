@@ -13,7 +13,7 @@ namespace NPCKillCounter;
 public class NPCKillCounterPlayer : ModPlayer
 {
     internal static int Hit;
-    internal DefaultDictionary<string, int> Count = new(); // 和角色绑定,不是静态字段但是不是同步
+    internal DefaultDictionary<string, int> Count = new();
 
     public override void Load()
     {
@@ -21,18 +21,19 @@ public class NPCKillCounterPlayer : ModPlayer
         {
             var ilCursor = new ILCursor(il);
             ilCursor.Emit(OpCodes.Ldarg_1); // NPCKillAttempt
-            ilCursor.Emit(OpCodes.Ldfld, typeof(NPCKillAttempt).GetField(nameof(NPCKillAttempt.npc))); // NPCKillAttempt
-            ilCursor.EmitDelegate<Action<NPC>>(npc => { Count[new NPCDefinition(npc.type).ToString()]++; });
+            ilCursor.Emit(OpCodes.Ldfld, typeof(NPCKillAttempt).GetField(nameof(NPCKillAttempt.npc)));
+            ilCursor.EmitDelegate<Action<NPC>>(npc =>
+            {
+                Count[new NPCDefinition(npc.type).ToString()]++;
+                Console.WriteLine($"{new NPCDefinition(npc.type).ToString()} {Count[new NPCDefinition(npc.type).ToString()]}");
+                Console.WriteLine(Count.Count);
+            });
         };
     }
 
     public override void SaveData(TagCompound tag)
     {
-        if (Count == null)
-        {
-            return;
-        }
-
+        Console.WriteLine(Count.Count);
         var data = new List<string>();
         foreach (var (name, count) in Count)
         {
