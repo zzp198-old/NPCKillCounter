@@ -1,4 +1,4 @@
 displayName = NPC Kill Counter
 author = zzp198
-version = 0.2
+version = 0.3
 homepage = https://steamcommunity.com/sharedfiles/filedetails/?id=2869445765
