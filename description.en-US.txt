@@ -2,24 +2,25 @@
 
 [h1]Need someone to help translate Chinese into English.[/h1]
 
-[h2]问与答:[/h2]
-[h3]我记得原版有杀怪计数,为什么还需要你这个mod呢?[/h3]
-原版中的杀怪计数是以NPC所在的旗帜为一类进行的笼统统计,比如红黄蓝绿史莱姆甚至史莱姆王,都归为蓝史莱姆,这就让计数变的不准确性.
-此MOD则是完全按照NPC的唯一ID进行统计,1是1,2是2,可以计算出每一种NPC的死亡计数.
+[h2] Q&A: [/h2]
+[h3] I remember that the original version has a monster killing count. Why do you still need your mod? [/h3]
+The monster killing count in the original version is a general statistic based on the flag of NPC. For example, the red, yellow, blue and green Slim and even the King Slim are all classified as Blue Slim, which makes the count inaccurate.
+This MOD is counted completely according to the unique ID of NPC. 1 is 1, 2 is 2, and the death count of each NPC can be calculated.
 
-[h3]有啥视觉效果?[/h3]
-修改了原生的杀怪技术提示,显示你最后攻击的NPC的[b]个人杀怪计数/世界总击杀计数[/b].
-但需要注意,有些NPC虽然不同,但是它们的名字是一模一样的,比如僵尸,火把僵尸等都叫僵尸.
-按下alt(收藏键)可以暂时切换显示NPC的唯一ID,需要注意是英文,通常用不到,只是如果出现同一个名字但是计数忽高忽低的时候知道为什么即可.
+[h3] What are the visual effects? [/h3]
+Modified the native monster killing technique prompt to display the [b]individual monster killing count/world total killing count[/b] of the NPC you last attacked.
+However, it should be noted that although some NPCs are different, their names are the same. For example, zombies, torch zombies, etc. are called zombies.
+Press alt (Favorites) to temporarily switch the display of NPC's unique ID. Note that it is in English, which is usually not used. It is only necessary to know why when the same name appears but the count goes up and down.
 
-注意: 因为没有特殊的钩子兼容判断击杀,所以两者计数略有不同,个人是攻击后NPC死亡,世界是NPC战败掉落物品,相比之下个人会在某些情况出现偏差.
-例如Fargo的最终BOSS,因为战败不会死亡,所以不会被个人杀怪计数,只会被世界总击杀计数,哈哈哈,想不到吧,永战不败!
+Note: Because there is no special hook compatible kill judgment, the two counts are slightly different. An individual dies after an attack, and the world is an item dropped by an NPC after a defeat. In contrast, an individual may deviate in some cases.
+For example, Fargo's final BOSS will not be killed, so it will not be counted by individual monsters, but only by the world's total number. Ha ha ha! Unexpectedly, it will never be defeated!
 
-[h3]会对原生杀怪计数有影响吗?[/h3]
-没有,比如旗帜的掉落是按照原生计数来计算的,此MOD只是视觉屏蔽了原来的计数并且添加了一层新的计数并显示,原生的统计和旗帜掉落不受影响.
+[h3] Will it affect the original monster killing count? [/h3]
 
-[h3]有没有加入开发者功能?[/h3]
-有,添加了两个Call接口,非常简单,可以获取和修改特定NPC的计数列表.
-具体使用可以参考源代码https://github.com/zzp198/NPCKillCounter/blob/master/NPCKillCounter.cs#L10
+No, for example, the flag drop is calculated according to the original count. This MOD only visually blocks the original count and adds a new layer of count to display. The original statistics and flag drop are not affected.
 
-目前以有个想法,可以根据具体的NPC计数,实现防止跨阶段挑战BOSS的功能(懒).
+[h3] Have you added developer functions? [/h3]
+Yes, two Call interfaces are added, which is very simple. You can obtain and modify the count list of specific NPCs.
+Refer to the source code for specific use https://github.com/zzp198/NPCKillCounter/blob/master/NPCKillCounter.cs#L10
+
+At present, we have an idea that we can count the NPC according to the specific number to prevent cross phase BOSS challenges.
